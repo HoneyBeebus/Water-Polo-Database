@@ -67,7 +67,7 @@ def Players():
     if Action == "c":
         for x in range (3):
                print(" ")
-        Home()
+        Spectator()
 
 def Monthly():
     print("--------------------------------------------------------------------")
@@ -116,9 +116,9 @@ def Games():
     elif Action == "c":
         for x in range (3):
                print(" ")
-        Home()
+        Spectator()
 
-def S():
+def Spectator():
         print("What would you like to do?")
         print("a.) Access Player Stats")
         print("b.) Access Game Stats")
@@ -139,5 +139,5 @@ def S():
 print("INITIALIZED VIEW DATA")
 print("CONNECTED TO DATABASE")
 print("--------------------------------------------------------------------")
-Home()
+Spectator()
 
