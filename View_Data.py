@@ -1,7 +1,7 @@
 #--------PROPERTY OF C. HENRY WHITE AND JOSE CADENAS-------------------
 import sqlite3
 
-
+#BEGIN SPECTATOR IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 connect = sqlite3.connect('WPS.db')
 cursor = connect.cursor()
 
@@ -133,11 +133,86 @@ def Spectator():
         if Players_or_Games == "c":
             Terminate()
             
-        
+#END OF SPECTATOR IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+
+#BEGIN STAFF IMPLEMENTATION+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+def DropMostRecent():
+    print("--------------------------------------------------------------------")
+    print("Most Recent game has been dropped!")
+    print("--------------------------------------------------------------------")
+    for x in range (3):
+             print(" ")
+    Update()
+    
+def NewGame():
+    print("Please supply the following information:")
+    print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    print("Home Team ID ")
+    HID = input("=>")
+    print("Away Team ID ")
+    AID = input("=>")
+    print("Home Team Score ")
+    HTS = input("=>")
+    print("Away Team Score ")
+    ATS = input("=>")
+    print("Did the game go into overtime? (yes/no) ")
+    OT = input("=>")
+    print("What was the date (YYYY-MM-DD) ")
+    DATE = input("=>")
+    print(" ")
+    print("GAME COMMITED")
+    print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    for x in range (3):
+             print(" ")
+    Update()
+
+def Update():
+    print("What would you like to do?")
+    print("a.) Add the results of a recent game")
+    print("b.) Drop the most recent game")
+    print("c.) Homepage")
+    for x in range (3):
+           print(" ")
+    Action = input("=>")
+    if Action == "a":
+        for x in range (3):
+            print(" ")
+        NewGame()
+    elif Action == "b":
+        for x in range (3):
+            print(" ")
+        DropMostRecent()
+    elif Action == "c":
+        for x in range (3):
+            print(" ")
+        Staff()
+    
+
+def Staff():
+    print("What would you like to do?")
+    print("a.) Update Game Stats")
+    print("b.) Close Program")
+    for x in range (3):
+        print(" ")
+    Update_or_nah = input("=>").lower()
+    if Update_or_nah == "a":
+        Update()
+    if Update_or_nah == "b":
+        Terminate()
+#END STAFF IMPLEMENTATION+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+def User():
+    print("Please Declare Your User Type (Spectator/Staff)")
+    Actor = input("=>").lower()
+    if Actor == "spectator":
+        Spectator()
+    elif Actor == "staff":
+        Staff()
 
 
 print("INITIALIZED VIEW DATA")
 print("CONNECTED TO DATABASE")
 print("--------------------------------------------------------------------")
-Spectator()
+User()
 
