@@ -14,8 +14,9 @@ def Terminate():
     connect.close()
     
 def spaces():
-    for x in range (3):
-        print("")
+    print("")
+    print("")
+    print("")
     
 #++++++++BEGIN SPECTATOR IMPLEMENTATION++++++++++++++++++++++++++++++++
 
@@ -124,21 +125,19 @@ def Games():
 
 
 def Spectator():
+        spaces()
         print("What would you like to do?")
         print("a.) Access Player Stats")
         print("b.) Access Game Stats")
         print("c.) User Selection")
-        for x in range (3):
-            print(" ")
+        spaces()
         Players_or_Games = raw_input("=>").lower()
         if Players_or_Games == "a":
             Players()
         if Players_or_Games == "b":
             Games()
         if Players_or_Games == "c":
-            for x in range (3):
-                print(" ")
-            
+            spaces()
 #++++++++++++++END OF SPECTATOR IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++
 
 
@@ -318,7 +317,7 @@ def User():
     i = 1
     while i > 0:
         print("Please Declare Your User Type")
-        print("spectator, staff, coach, admin or shutdown")
+        print("Spectator, Staff, Coach, Admin or Shutdown")
         Actor = raw_input("=>").lower()
         if Actor == "spectator":
             Spectator()
@@ -328,7 +327,7 @@ def User():
             Coach()
         elif Actor == "admin":
             Admin()
-        elif Actor == "shutdown":
+        elif Actor == "shutdown" or Actor == "s":
             print("Shutting down...")
             cursor.close()
             connect.close()
@@ -337,7 +336,7 @@ def User():
             print("Invalid input, try again...")
 
 spaces()
-print("INITIALIZING CONNECTION")
+print("INITIALIZING CONNECTION...")
 print("CONNECTED TO DATABASE")
 print("--------------------------------------------------------------------")
 User()
