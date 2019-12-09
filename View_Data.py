@@ -1,10 +1,17 @@
-#--------PROPERTY OF C. HENRY WHITE AND JOSE CADENAS-------------------
-import sqlite3
 
-#BEGIN SPECTATOR IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#--------PROPERTY OF C. HENRY WHITE AND JOSE CADENAS-------------------
+#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+import sqlite3
 connect = sqlite3.connect('WPS.db')
 cursor = connect.cursor()
 
+
+
+
+
+#++++++++FUNCTION TO CLOSE CONNECTION TO DB+++++++++++++++++++++++++++++
 def Terminate():
     print("Shutting down...")
     print("--------------------------------------------------------------------")
@@ -13,6 +20,12 @@ def Terminate():
     print("Disconnected from database!!!!!!")
 
 
+
+
+
+
+
+#++++++++BEGIN SPECTATOR IMPLEMENTATION++++++++++++++++++++++++++++++++
 
 def PlayerSearch():
     print("What player are you looking for?")
@@ -33,7 +46,6 @@ def PlayerSearch():
         Players()
 
 
-
 def Top_Scoreres():
     cursor.execute("""SELECT p_name, s_goals, t_name
                     From Teams, Players, Stats
@@ -45,6 +57,7 @@ def Top_Scoreres():
     print(cursor.fetchall())
     print("--------------------------------------------------------------------")
     Players()
+
 
 def Players():
     for x in range(3):
@@ -69,6 +82,7 @@ def Players():
                print(" ")
         Spectator()
 
+
 def Monthly():
     print("--------------------------------------------------------------------")
     print("The number of games hosted this DECEMBER are:")
@@ -76,6 +90,7 @@ def Monthly():
     print("[(22)]")
     print("--------------------------------------------------------------------")
     Games()
+
 
 def Wins():
     print("What team are you interested in?")
@@ -118,6 +133,7 @@ def Games():
                print(" ")
         Spectator()
 
+
 def Spectator():
         print("What would you like to do?")
         print("a.) Access Player Stats")
@@ -133,10 +149,10 @@ def Spectator():
         if Players_or_Games == "c":
             Terminate()
             
-#END OF SPECTATOR IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#++++++++++++++END OF SPECTATOR IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++
 
 
-#BEGIN STAFF IMPLEMENTATION+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+#++++++++++++++BEGIN STAFF IMPLEMENTATION+++++++++++++++++++++++++++++++++++++++++++++++
 def DropMostRecent():
     print("--------------------------------------------------------------------")
     print("Most Recent game has been dropped!")
@@ -144,6 +160,7 @@ def DropMostRecent():
     for x in range (3):
              print(" ")
     Update()
+    
     
 def NewGame():
     print("Please supply the following information:")
@@ -166,6 +183,7 @@ def NewGame():
     for x in range (3):
              print(" ")
     Update()
+
 
 def Update():
     print("What would you like to do?")
@@ -200,8 +218,10 @@ def Staff():
         Update()
     if Update_or_nah == "b":
         Terminate()
-#END STAFF IMPLEMENTATION+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+        
+#++++++++++++++++END STAFF IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++
 
+#++++++++++++++++DRIVER FUNCTION+++++++++++++++++++++++++++++++++++++++++++++++++++
 def User():
     print("Please Declare Your User Type (Spectator/Staff)")
     Actor = input("=>").lower()
