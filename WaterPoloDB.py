@@ -1,12 +1,10 @@
 
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#--------PROPERTY OF C. HENRY WHITE AND JOSE CADENAS-------------------
+#--------PROPERTY OF C. HENRY WHITE AND JOSE B. CADENAS----------------
 #++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-
 import sqlite3
 connect = sqlite3.connect('WPS.db')
 cursor = connect.cursor()
-
 #++++++++FUNCTION TO CLOSE CONNECTION TO DB+++++++++++++++++++++++++++++
 def Terminate():
     print("--------------------------------------------------------------------")
@@ -17,13 +15,10 @@ def spaces():
     print("")
     print("")
     print("")
-    
 #++++++++BEGIN SPECTATOR IMPLEMENTATION++++++++++++++++++++++++++++++++
-
 def PlayerSearch():
     print("What player are you looking for?")
-    for x in range (3):
-           print(" ")
+    spaces()
     Action = raw_input("=>")
     if Action == "Cade Nixon":
         cursor.execute("""SELECT p_name, s_goals, s_attempts, s_ejectDraw, s_ejections, s_steals, s_assist FROM Players, Stats WHERE p_name = 'Cade Nixon' and s_playerID = p_playerID""")
@@ -38,7 +33,6 @@ def PlayerSearch():
         print("--------------------------------------------------------------------")
         Players()
 
-
 def Top_Scoreres():
     cursor.execute("""SELECT p_name, s_goals, t_name
                     From Teams, Players, Stats
@@ -50,7 +44,6 @@ def Top_Scoreres():
     print(cursor.fetchall())
     print("--------------------------------------------------------------------")
     Players()
-
 
 def Players():
     spaces()
@@ -73,7 +66,6 @@ def Players():
                print(" ")
         Spectator()
 
-
 def Monthly():
     print("--------------------------------------------------------------------")
     print("The number of games hosted this DECEMBER are:")
@@ -81,7 +73,6 @@ def Monthly():
     print("[(22)]")
     print("--------------------------------------------------------------------")
     Games()
-
 
 def Wins():
     print("What team are you interested in?")
@@ -99,7 +90,6 @@ def Wins():
         print("Team does not exist!")
         print("--------------------------------------------------------------------")
         Games()
-    
 
 def Games():
     spaces()
@@ -123,7 +113,6 @@ def Games():
                print(" ")
         Spectator()
 
-
 def Spectator():
         spaces()
         print("What would you like to do?")
@@ -139,8 +128,6 @@ def Spectator():
         if Players_or_Games == "c":
             spaces()
 #++++++++++++++END OF SPECTATOR IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++
-
-
 #++++++++++++++BEGIN STAFFF IMPLEMENTATION+++++++++++++++++++++++++++++++++++++++++++++++
 def DropMostRecent():
     print("--------------------------------------------------------------------")
@@ -148,7 +135,6 @@ def DropMostRecent():
     print("--------------------------------------------------------------------")
     spaces()
     Update()
-    
     
 def NewGame():
     print("Please supply the following information:")
@@ -171,7 +157,6 @@ def NewGame():
     spaces()
     Update()
 
-
 def Update():
     spaces()
     print("What would you like to do?")
@@ -189,7 +174,6 @@ def Update():
     elif Action == "c":
         spaces()
         Staff()
-    
 
 def Staff():
     spaces()
@@ -202,10 +186,7 @@ def Staff():
         Update()
     if Update_or_nah == "b":
         spaces()
-        
-        
 #++++++++++++++++END STAFF IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++
-
 #++++++++++++++BEGIN COACH IMPLEMENTATION+++++++++++++++++++++++++++++++++++++++++++++++
 def InjuredPlayers():
     spaces()
@@ -236,7 +217,6 @@ def SomeStats():
     cursor.execute("SELECT * FROM Stats WHERE s_name = 'Cade Nixon'")
     print(cursor.fetchall())
 
-    
 def AddStats():
     spaces()
     #Immplementation will mimic c_AddPlayer
@@ -260,7 +240,7 @@ def CoachPlayers():
 def Stats():
     spaces()
     print("What would you like to do?")
-    print("a.) List someones stats")
+    print("a.) List someone's stats")
     print("b.) Add player to stats")
     print("c.) Coach options")
     Action = raw_input("=>")
@@ -291,29 +271,25 @@ def Coach():
         else:
             print("Invalid raw_input, try again...")
 #++++++++++++++++END COACH IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++
- 
- #++++++++++++++BEGIN ADMIN IMPLEMENTATION+++++++++++++++++++++++++++++++++++++++++++++++
-def handle(sql):
-    cursor.execute(sql)
-    print(cursor.fetchall())
+#++++++++++++++BEGIN ADMIN IMPLEMENTATION+++++++++++++++++++++++++++++++++++++++++++++++
+def handle(query):
+    for row in cursor.execute(query):
+        print(row)
 
 def Admin():
     i = 1
     while i > 0:
         spaces()
-        print("Insert your qurey: ")
-        print("or c.) User selection")
+        print("Insert your query: ")
+        print("a.) User selection")
         spaces()
-        Players_or_Stats = raw_input("=>").lower()
-        if Players_or_Stats == "c":
-            print("Shutting down...")
+        Players_or_Stats = raw_input("=>")
+        if Players_or_Stats == "a" or "A":
             break
         handle(Players_or_Stats)
 #++++++++++++++++END ADMIN IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++
-
-#++++++++++++++++DRIVER FUNCTION+++++++++++++++++++++++++++++++++++++++++++++++++++
+#++++++++++++++++MAIN FUNCTION+++++++++++++++++++++++++++++++++++++++++++++++++++
 def User():
-    
     i = 1
     while i > 0:
         print("Please Declare Your User Type")
