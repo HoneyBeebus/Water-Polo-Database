@@ -1,11 +1,28 @@
-
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-#--------PROPERTY OF C. HENRY WHITE AND JOSE B. CADENAS----------------
-#++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+##############################################################################
+#____________ ___________ ___________ _______   __   ___________             #
+#| ___ \ ___ \  _  | ___ \  ___| ___ \_   _\ \ / /  |  _  |  ___|            #
+#| |_/ / |_/ / | | | |_/ / |__ | |_/ / | |  \ V /   | | | | |_               #
+#|  __/|    /| | | |  __/|  __||    /  | |   \ /    | | | |  _|              #
+#| |   | |\ \\ \_/ / |   | |___| |\ \  | |   | |    \ \_/ / |                #
+#\_|   \_| \_|\___/\_|   \____/\_| \_| \_/   \_/     \___/\_|                #
+# _____     _   _  _____ _   _ ________   __  _    _ _   _ _____ _____ _____ #
+#/  __ \   | | | ||  ___| \ | || ___ \ \ / / | |  | | | | |_   _|_   _|  ___|#
+#| /  \/   | |_| || |__ |  \| || |_/ /\ V /  | |  | | |_| | | |   | | | |__  #
+#| |       |  _  ||  __|| . ` ||    /  \ /   | |/\| |  _  | | |   | | |  __| #
+#| \__/\_  | | | || |___| |\  || |\ \  | |   \  /\  / | | |_| |_  | | | |___ #
+# \____(_) \_| |_/\____/\_| \_/\_| \_| \_/    \/  \/\_| |_/\___/  \_/ \____/ #
+#   ___  _____ _____ _____   _____   ___ ______ _____ _   _   ___   _____    #
+#  |_  ||  _  /  ___|  ___| /  __ \ / _ \|  _  \  ___| \ | | / _ \ /  ___|   #
+#    | || | | \ `--.| |__   | /  \// /_\ \ | | | |__ |  \| |/ /_\ \\ `--.    #
+#    | || | | |`--. \  __|  | |    |  _  | | | |  __|| . ` ||  _  | `--. \   #
+#/\__/ /\ \_/ /\__/ / |___  | \__/\| | | | |/ /| |___| |\  || | | |/\__/ /   #
+#\____/  \___/\____/\____/   \____/\_| |_/___/ \____/\_| \_/\_| |_/\____/    #
+#                                                                            #
+##############################################################################
 import sqlite3
 connect = sqlite3.connect('WPS.db')
 cursor = connect.cursor()
-#++++++++FUNCTION TO CLOSE CONNECTION TO DB+++++++++++++++++++++++++++++
+#++++++++FUNCTION TO CLOSE CONNECTION TO DB+++++++++++++++++++++++++++++++++++++
 def Terminate():
     print("--------------------------------------------------------------------")
     cursor.close()
@@ -15,7 +32,7 @@ def spaces():
     print("")
     print("")
     print("")
-#++++++++BEGIN SPECTATOR IMPLEMENTATION++++++++++++++++++++++++++++++++
+#++++++++BEGIN SPECTATOR IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++
 def PlayerSearch():
     print("What player are you looking for?")
     spaces()
@@ -127,8 +144,8 @@ def Spectator():
             Games()
         if Players_or_Games == "c":
             spaces()
-#++++++++++++++END OF SPECTATOR IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++
-#++++++++++++++BEGIN STAFFF IMPLEMENTATION+++++++++++++++++++++++++++++++++++++++++++++++
+#++++++++++++++END OF SPECTATOR IMPLEMENTATION+++++++++++++++++++++++++++++++++++++
+#++++++++++++++BEGIN STAFFF IMPLEMENTATION+++++++++++++++++++++++++++++++++++++++++
 def DropMostRecent():
     print("--------------------------------------------------------------------")
     print("Most Recent game has been dropped!")
@@ -187,11 +204,11 @@ def Staff():
     if Update_or_nah == "b":
         spaces()
 #++++++++++++++++END STAFF IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++
-#++++++++++++++BEGIN COACH IMPLEMENTATION+++++++++++++++++++++++++++++++++++++++++++++++
+#++++++++++++++BEGIN COACH IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++
 def InjuredPlayers():
     spaces()
-    cursor.execute("SELECT p_playerID, p_name FROM Players")
-    print(cursor.fetchall())
+    for row in cursor.execute("SELECT p_playerID, p_name FROM Players"):
+    print(row)
     spaces()
     
 def AddPlayer():
@@ -226,7 +243,7 @@ def AddStats():
 def CoachPlayers():
     spaces()
     print("What would you like to do?")
-    print("a.) List injured players")
+    print("a.) List all injured players")
     print("b.) Add new player")
     print("c.) Coach options")
     Action = raw_input("=>")
@@ -266,12 +283,12 @@ def Coach():
         elif Players_or_Stats == "b":
             Stats()
         elif Players_or_Stats == "c":
-            print("Shutting down...")
+            spaces()
             i = 0
         else:
             print("Invalid raw_input, try again...")
 #++++++++++++++++END COACH IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++
-#++++++++++++++BEGIN ADMIN IMPLEMENTATION+++++++++++++++++++++++++++++++++++++++++++++++
+#++++++++++++++BEGIN ADMIN IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++
 def handle(query):
     for row in cursor.execute(query):
         print(row)
@@ -285,10 +302,11 @@ def Admin():
         spaces()
         Players_or_Stats = raw_input("=>")
         if Players_or_Stats == "a" or "A":
+            spaces()
             break
         handle(Players_or_Stats)
 #++++++++++++++++END ADMIN IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++
-#++++++++++++++++MAIN FUNCTION+++++++++++++++++++++++++++++++++++++++++++++++++++
+#++++++++++++++++MAIN FUNCTION+++++++++++++++++++++++++++++++++++++++++++++++++++++
 def User():
     i = 1
     while i > 0:
@@ -303,7 +321,7 @@ def User():
             Coach()
         elif Actor == "admin":
             Admin()
-        elif Actor == "shutdown" or Actor == "s":
+        elif Actor == "shutdown" or "s":
             print("Shutting down...")
             cursor.close()
             connect.close()
