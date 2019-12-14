@@ -370,7 +370,7 @@ def Admin():
         print("z.) User selection")
         spaces()
         Players_or_Stats = raw_input("=>")
-        if Players_or_Stats == "z" or "Z":
+        if Players_or_Stats == "z" or Players_or_Stats == "Z":
             spaces()
             break
         handle(Players_or_Stats)
