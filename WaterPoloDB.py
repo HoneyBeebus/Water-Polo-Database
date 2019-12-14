@@ -37,18 +37,12 @@ def PlayerSearch():
     print("What player are you looking for?")
     spaces()
     Action = raw_input("=>")
-    if Action == "Cade Nixon":
-        cursor.execute("""SELECT p_name, s_goals, s_attempts, s_ejectDraw, s_ejections, s_steals, s_assist FROM Players, Stats WHERE p_name = 'Cade Nixon' and s_playerID = p_playerID""")
-        print("--------------------------------------------------------------------")
-        print("Name, Goals, Attempts, Ejections Drawn, Ejections, Steals, Assists")
-        print(cursor.fetchall())
-        print("--------------------------------------------------------------------")
-        Players()
-    elif Action != "Cade Nixon":
-        print("--------------------------------------------------------------------")
-        print("Player does not exist!")
-        print("--------------------------------------------------------------------")
-        Players()
+    cursor.execute("""SELECT p_name, s_goals, s_attempts, s_ejectDraw, s_ejections, s_steals, s_assist FROM Players, Stats WHERE p_name = ? and s_playerID = p_playerID"""(Action, )
+    print("--------------------------------------------------------------------")
+    print("Name, Goals, Attempts, Ejections Drawn, Ejections, Steals, Assists")
+    print(cursor.fetchall())
+    print("--------------------------------------------------------------------")
+    Players()
 
 def Top_Scoreres():
     cursor.execute("""SELECT p_name, s_goals, t_name
@@ -93,20 +87,34 @@ def Monthly():
 
 def Wins():
     print("What team are you interested in?")
+    print("1.) Seattle Fire Crackers")
+    print("2.) San Francisco Quake")
+    print("3.) Los Angles Smog")
+    print("4.) Bend BrotherHood")
+    print("5.) Michagan Menaces")
+    print("6.) Indiana Ignorants")
+    print("7.) Wisconson Unwieldies")
+    print("8.) Kentucky Kings")
+    print("9.) Oklahoma Onion Knights")
+    print("10.) Nadia Noodlers")
+    print("11.) Johnsonville Sausages")
+    print("12.) Tuscaloosa Titans")
+    print("13.) DC Dictators")
+    print("14.) Gergetown Growlers")
+    print("15.) Baltimore Beasts")
+    print("16.) Virginia Victors")
+    print("17.) Texas Texans")
+    print("18.) Bayou Bullets")
+    print("19.) New Mexico Cooks")
+    print("20.) Colorado Cools")
     for x in range (3):
            print(" ")
     Action = raw_input("=>")
-    if Action == "Seattle Fire Crackers":
-        print("--------------------------------------------------------------------")
-        cursor.execute("""SELECT COUNT(g_gameID) FROM Games WHERE (g_homeID = '1' AND g_homeScore > g_awayScore) OR (g_awayID = '1' AND g_homeScore < g_awayScore)""")
-        print(cursor.fetchall())
-        print("--------------------------------------------------------------------")
-        Games()
-    elif Action != "Seattle Fire Crackers":
-        print("--------------------------------------------------------------------")
-        print("Team does not exist!")
-        print("--------------------------------------------------------------------")
-        Games()
+    print("--------------------------------------------------------------------")
+    cursor.execute("""SELECT COUNT(g_gameID) FROM Games WHERE (g_homeID = ? AND g_homeScore > g_awayScore) OR (g_awayID = ? AND g_homeScore < g_awayScore)"""(Action, )
+    print(cursor.fetchall())
+    print("--------------------------------------------------------------------")
+    Games()
 
 def Games():
     spaces()
@@ -146,12 +154,6 @@ def Spectator():
             spaces()
 #++++++++++++++END OF SPECTATOR IMPLEMENTATION+++++++++++++++++++++++++++++++++++++
 #++++++++++++++BEGIN STAFFF IMPLEMENTATION+++++++++++++++++++++++++++++++++++++++++
-def DropMostRecent():
-    print("--------------------------------------------------------------------")
-    print("Most Recent game has been dropped!")
-    print("--------------------------------------------------------------------")
-    spaces()
-    Update()
     
 def NewGame():
     print("Please supply the following information:")
@@ -166,9 +168,12 @@ def NewGame():
     ATS = raw_input("=>")
     print("Did the game go into overtime? (yes/no) ")
     OT = raw_input("=>")
+    print("What was the Home Address?")
+    ADDR= raw_input("=>")
     print("What was the date (YYYY-MM-DD) ")
     DATE = raw_input("=>")
     print(" ")
+    cursor.execute("""INSERT INTO Games (g_gameID, g_homeID, g_awayID, g_homeScore, g_awayScore, g_OT, g_hostaddr, g_date) VALUES (?,?.?.?.?.?.?.?)"""(HID,AID,HTS,ATS,OT,ADDR,DATE, )
     print("GAME COMMITED")
     print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     spaces()
@@ -178,17 +183,13 @@ def Update():
     spaces()
     print("What would you like to do?")
     print("a.) Add the results of a recent game")
-    print("b.) Drop the most recent game")
-    print("c.) Homepage")
+    print("b.) Homepage")
     spaces()
     Action = raw_input("=>")
     if Action == "a":
         spaces()
         NewGame()
     elif Action == "b":
-        spaces()
-        DropMostRecent()
-    elif Action == "c":
         spaces()
         Staff()
 
