@@ -20,8 +20,10 @@
 #                                                                            #
 ##############################################################################
 import sqlite3
-#connect = sqlite3.connect('WPS.db') #Henry's Connection
-connect = sqlite3.connect('/Users/jose/Desktop/WPS.db') #Jose's Connection
+#Henry's Connection
+connect = sqlite3.connect('WPS.db')
+#Jose's Connection
+#connect = sqlite3.connect('/Users/jose/Desktop/WPS.db')
 cursor = connect.cursor()
 #++++++++FUNCTION TO CLOSE CONNECTION TO DB+++++++++++++++++++++++++++++++++++++
 def Terminate():
@@ -38,7 +40,7 @@ def PlayerSearch():
     print("What player are you looking for?")
     spaces()
     Action = raw_input("=>")
-    cursor.execute("""SELECT p_name, s_goals, s_attempts, s_ejectDraw, s_ejections, s_steals, s_assist FROM Players, Stats WHERE p_name = ? and s_playerID = p_playerID""", (Action,))
+    cursor.execute("""SELECT p_name, s_goals, s_attempts, s_ejectDraw, s_ejections, s_steals, s_assist FROM Players, Stats WHERE p_name = ? and s_playerID = p_playerID"""(Action, )
     print("--------------------------------------------------------------------")
     print("Name, Goals, Attempts, Ejections Drawn, Ejections, Steals, Assists")
     print(cursor.fetchall())
@@ -46,10 +48,14 @@ def PlayerSearch():
     Players()
 
 def Top_Scoreres():
+    cursor.execute("""SELECT p_name, s_goals, t_name
+                    From Teams, Players, Stats
+                    WHERE s_goals > '0' AND s_playerID = p_playerID AND p_teamID = t_teamID
+                    ORDER BY s_goals DESC
+                    LIMIT 5""")
     print("--------------------------------------------------------------------")
     print("The current leading scorers are:")
-    for row in cursor.execute("""SELECT p_name, s_goals, t_name From Teams, Players, Stats WHERE s_goals > '0' AND s_playerID = p_playerID AND p_teamID = t_teamID ORDER BY s_goals DESC LIMIT 5"""):
-        print(row)
+    print(cursor.fetchall())
     print("--------------------------------------------------------------------")
     Players()
 
@@ -108,7 +114,7 @@ def Wins():
            print(" ")
     Action = raw_input("=>")
     print("--------------------------------------------------------------------")
-    cursor.execute("""SELECT COUNT(g_gameID) FROM Games WHERE (g_homeID = ? AND g_homeScore > g_awayScore) OR (g_awayID = ? AND g_homeScore < g_awayScore)"""(Action, ))
+    cursor.execute("""SELECT COUNT(g_gameID) FROM Games WHERE (g_homeID = ? AND g_homeScore > g_awayScore) OR (g_awayID = ? AND g_homeScore < g_awayScore)"""(Action, )
     print(cursor.fetchall())
     print("--------------------------------------------------------------------")
     Games()
@@ -169,7 +175,7 @@ def NewGame():
     print("What was the date (YYYY-MM-DD) ")
     DATE = raw_input("=>")
     print(" ")
-    cursor.execute("""INSERT INTO Games (g_gameID, g_homeID, g_awayID, g_homeScore, g_awayScore, g_OT, g_hostaddr, g_date) VALUES (?,?.?.?.?.?.?.?)"""(HID,AID,HTS,ATS,OT,ADDR,DATE,))
+    cursor.execute("""INSERT INTO Games (g_gameID, g_homeID, g_awayID, g_homeScore, g_awayScore, g_OT, g_hostaddr, g_date) VALUES (?,?.?.?.?.?.?.?)"""(HID,AID,HTS,ATS,OT,ADDR,DATE, )
     print("GAME COMMITED")
     print("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     spaces()
@@ -243,6 +249,7 @@ def ChangeHealthStatus():
     connect.commit()
     print("Health Status Updated.")
     spaces()
+
 #Stats Functions
 def ListStats():
     x = raw_input("Specify team: Enter # or 'all'\r\n=>")
