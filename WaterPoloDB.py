@@ -38,7 +38,7 @@ def PlayerSearch():
     print("What player are you looking for?")
     spaces()
     Action = raw_input("=>")
-    cursor.execute("""SELECT p_name, s_goals, s_attempts, s_ejectDraw, s_ejections, s_steals, s_assist FROM Players, Stats WHERE p_name = ? and s_playerID = p_playerID"""(Action,))
+    cursor.execute("""SELECT p_name, s_goals, s_attempts, s_ejectDraw, s_ejections, s_steals, s_assist FROM Players, Stats WHERE p_name = ? and s_playerID = p_playerID""", (Action,))
     print("--------------------------------------------------------------------")
     print("Name, Goals, Attempts, Ejections Drawn, Ejections, Steals, Assists")
     print(cursor.fetchall())
@@ -46,14 +46,10 @@ def PlayerSearch():
     Players()
 
 def Top_Scoreres():
-    cursor.execute("""SELECT p_name, s_goals, t_name
-                    From Teams, Players, Stats
-                    WHERE s_goals > '0' AND s_playerID = p_playerID AND p_teamID = t_teamID
-                    ORDER BY s_goals DESC
-                    LIMIT 5""")
     print("--------------------------------------------------------------------")
     print("The current leading scorers are:")
-    print(cursor.fetchall())
+    for row in cursor.execute("""SELECT p_name, s_goals, t_name From Teams, Players, Stats WHERE s_goals > '0' AND s_playerID = p_playerID AND p_teamID = t_teamID ORDER BY s_goals DESC LIMIT 5"""):
+        print(row)
     print("--------------------------------------------------------------------")
     Players()
 
@@ -183,13 +179,13 @@ def Update():
     spaces()
     print("What would you like to do?")
     print("a.) Add the results of a recent game")
-    print("b.) Homepage")
+    print("z.) Homepage")
     spaces()
     Action = raw_input("=>")
     if Action == "a":
         spaces()
         NewGame()
-    elif Action == "b":
+    elif Action == "z":
         spaces()
         Staff()
 
@@ -197,12 +193,12 @@ def Staff():
     spaces()
     print("What would you like to do?")
     print("a.) Update Game Stats")
-    print("b.) User Selection")
+    print("z.) User Selection")
     spaces()
     Update_or_nah = raw_input("=>").lower()
     if Update_or_nah == "a":
         Update()
-    if Update_or_nah == "b":
+    if Update_or_nah == "z":
         spaces()
 #++++++++++++++++END STAFF IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++
 #++++++++++++++BEGIN COACH IMPLEMENTATION++++++++++++++++++++++++++++++++++++++++++
