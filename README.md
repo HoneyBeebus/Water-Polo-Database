@@ -25,4 +25,4 @@ These instructions will get you a copy of the project up and running on your loc
 
 ## Documentation
 
-* [Design Document](CSE 111 - DB Project.pdf)
+* [Design Document](CSE 111 - DB Prjoect.pdf)
